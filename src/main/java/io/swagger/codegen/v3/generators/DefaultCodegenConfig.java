@@ -55,6 +55,8 @@ import io.swagger.v3.oas.models.media.NumberSchema;
 import io.swagger.v3.oas.models.media.ObjectSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
+import io.swagger.v3.oas.models.media.URISchema;
+import io.swagger.v3.oas.models.media.URLSchema;
 import io.swagger.v3.oas.models.media.UUIDSchema;
 import io.swagger.v3.oas.models.parameters.CookieParameter;
 import io.swagger.v3.oas.models.parameters.HeaderParameter;
@@ -1101,7 +1103,14 @@ public abstract class DefaultCodegenConfig implements CodegenConfig {
             return "UUID";
         } else if (schema instanceof StringSchema) {
             return "string";
-        } else if (schema instanceof ComposedSchema && schema.getExtensions() != null && schema.getExtensions().containsKey("x-model-name")) {
+        }
+        else if (schema instanceof URISchema) {
+            return SchemaTypeUtil.URI_FORMAT;
+        }
+        else if (schema instanceof URLSchema) {
+            return SchemaTypeUtil.URL_FORMAT;
+        }
+        else if (schema instanceof ComposedSchema && schema.getExtensions() != null && schema.getExtensions().containsKey("x-model-name")) {
             return schema.getExtensions().get("x-model-name").toString();
 
         } else {
@@ -1596,6 +1605,14 @@ public abstract class DefaultCodegenConfig implements CodegenConfig {
         if (propertySchema instanceof UUIDSchema) {
             codegenProperty.getVendorExtensions().put(CodegenConstants.IS_UUID_EXT_NAME, Boolean.TRUE);
             // keep isString to true to make it backward compatible
+            codegenProperty.getVendorExtensions().put(CodegenConstants.IS_STRING_EXT_NAME, Boolean.TRUE);
+        }
+        if (propertySchema instanceof URISchema) {
+            codegenProperty.getVendorExtensions().put(CodegenConstants.IS_URI_EXT_NAME, Boolean.TRUE);
+            codegenProperty.getVendorExtensions().put(CodegenConstants.IS_STRING_EXT_NAME, Boolean.TRUE);
+        }
+        if (propertySchema instanceof URLSchema) {
+            codegenProperty.getVendorExtensions().put(CodegenConstants.IS_URL_EXT_NAME, Boolean.TRUE);
             codegenProperty.getVendorExtensions().put(CodegenConstants.IS_STRING_EXT_NAME, Boolean.TRUE);
         }
         if (propertySchema instanceof ByteArraySchema) {

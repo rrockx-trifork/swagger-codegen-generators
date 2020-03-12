@@ -11,6 +11,8 @@ import io.swagger.v3.oas.models.media.Discriminator;
 import io.swagger.v3.oas.models.media.IntegerSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
+import io.swagger.v3.oas.models.media.URISchema;
+import io.swagger.v3.oas.models.media.URLSchema;
 import io.swagger.v3.oas.models.media.UUIDSchema;
 import io.swagger.v3.parser.util.SchemaTypeUtil;
 import org.testng.Assert;
@@ -30,7 +32,7 @@ public class Swift4ModelTest {
         Assert.assertEquals(cm.name, "sample");
         Assert.assertEquals(cm.classname, "Sample");
         Assert.assertEquals(cm.description, "a sample model");
-        Assert.assertEquals(cm.vars.size(), 7);
+        Assert.assertEquals(cm.vars.size(), 9);
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "id");
@@ -100,9 +102,30 @@ public class Swift4ModelTest {
         Assert.assertEquals(property7.name, "dateOfBirth");
         Assert.assertNull(property7.defaultValue);
         Assert.assertEquals(property7.baseType, "Date");
-        Assert.assertFalse(getBooleanValue(property7, CodegenConstants.HAS_MORE_EXT_NAME));
+        Assert.assertTrue(getBooleanValue(property7, CodegenConstants.HAS_MORE_EXT_NAME));
         Assert.assertFalse(property7.required);
         Assert.assertTrue(getBooleanValue(property7, CodegenConstants.IS_NOT_CONTAINER_EXT_NAME));
+
+        final CodegenProperty property8 = cm.vars.get(7);
+        Assert.assertEquals(property8.baseName, "uri");
+        Assert.assertEquals(property8.datatype, "Uri");
+        Assert.assertEquals(property8.name, "uri");
+        Assert.assertNull(property8.defaultValue);
+        Assert.assertEquals(property8.baseType, "Uri");
+        Assert.assertTrue(getBooleanValue(property8, CodegenConstants.HAS_MORE_EXT_NAME));
+        Assert.assertFalse(property8.required);
+        Assert.assertTrue(getBooleanValue(property8, CodegenConstants.IS_NOT_CONTAINER_EXT_NAME));
+
+        final CodegenProperty property9 = cm.vars.get(8);
+        Assert.assertEquals(property9.baseName, "url");
+        Assert.assertEquals(property9.datatype, "Url");
+        Assert.assertEquals(property9.name, "url");
+        Assert.assertNull(property9.defaultValue);
+        Assert.assertEquals(property9.baseType, "Url");
+        Assert.assertFalse(getBooleanValue(property9, CodegenConstants.HAS_MORE_EXT_NAME));
+        Assert.assertFalse(property9.required);
+        Assert.assertTrue(getBooleanValue(property9, CodegenConstants.IS_NOT_CONTAINER_EXT_NAME));
+
     }
 
     private Schema getSimpleSchema() {
@@ -117,6 +140,8 @@ public class Swift4ModelTest {
                 .addProperties("byte", new ByteArraySchema())
                 .addProperties("uuid", new UUIDSchema())
                 .addProperties("dateOfBirth", new DateSchema())
+                .addProperties("uri", new URISchema())
+                .addProperties("url", new URLSchema())
                 .addRequiredItem("id")
                 .addRequiredItem("name");
     }

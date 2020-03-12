@@ -48,6 +48,8 @@ public class CodegenHelper {
         typeMapping.put("binary", "byte[]");
         typeMapping.put("file", "File");
         typeMapping.put("UUID", "UUID");
+        typeMapping.put("uri", "URI");
+        typeMapping.put("url", "URL");
         typeMapping.put("BigDecimal", "BigDecimal");
         return typeMapping;
     }
@@ -56,6 +58,8 @@ public class CodegenHelper {
         final Map<String, String> importMapping = new HashMap<>();
         importMapping.put("BigDecimal", "java.math.BigDecimal");
         importMapping.put("UUID", "java.util.UUID");
+        importMapping.put("URI", "java.net.URI");
+        importMapping.put("URL", "java.net.URL");
         importMapping.put("File", "java.io.File");
         importMapping.put("Date", "java.util.Date");
         importMapping.put("Timestamp", "java.sql.Timestamp");

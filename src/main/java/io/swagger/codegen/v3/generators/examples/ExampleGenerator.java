@@ -13,6 +13,8 @@ import io.swagger.v3.oas.models.media.NumberSchema;
 import io.swagger.v3.oas.models.media.ObjectSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
+import io.swagger.v3.oas.models.media.URISchema;
+import io.swagger.v3.oas.models.media.URLSchema;
 import io.swagger.v3.oas.models.media.UUIDSchema;
 import io.swagger.v3.parser.util.SchemaTypeUtil;
 import io.swagger.v3.core.util.Json;
@@ -256,6 +258,10 @@ public class ExampleGenerator {
             return values;
         } else if (schema instanceof UUIDSchema) {
             return "046b6c7f-0b8a-43b9-b35d-6489e6daee91";
+        } else if (schema instanceof URISchema) {
+            return "tel:+1-816-555-1212";
+        } else if (schema instanceof URLSchema) {
+            return "https://example.org";
         }
         return "";
     }
